@@ -287,6 +287,9 @@ class WC_Product extends WC_Abstract_Legacy_Product {
 		return $this->get_prop( 'sale_price', $context );
 	}
 
+	public function get_first_price( $context = 'view' ) {
+		return $this->get_prop( 'first_price', $context );
+	}
 	/**
 	 * Get date on sale from.
 	 *
@@ -849,6 +852,10 @@ class WC_Product extends WC_Abstract_Legacy_Product {
 	 */
 	public function set_sale_price( $price ) {
 		$this->set_prop( 'sale_price', wc_format_decimal( $price ) );
+	}
+
+	public function set_first_price( $price ) {
+		$this->set_prop( 'first_price', wc_format_decimal( $price ) );
 	}
 
 	/**

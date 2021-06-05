@@ -42,6 +42,13 @@ defined( 'ABSPATH' ) || exit;
 				</span>
 			</label>
 			<br class="clear" />
+			<label>
+				<span class="title"><?php esc_html_e( 'First Price', 'woocommerce' ); ?></span>
+				<span class="input-text-wrap">
+					<input type="text" name="_first_price" class="text wc_input_price sale_price" placeholder="<?php esc_attr_e( 'Frist price', 'woocommerce' ); ?>" value="">
+				</span>
+			</label>
+			<br class="clear" />
 		</div>
 
 		<?php if ( wc_tax_enabled() ) : ?>

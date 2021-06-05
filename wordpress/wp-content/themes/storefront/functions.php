@@ -76,6 +76,69 @@ function stock_catalog() {
 }
 add_action( 'woocommerce_after_shop_loop_item_title', 'stock_catalog' );
 
+//add field
+function woo_add_fields() {
+	global $woocommerce, $post;
+	echo '<div class="options_group">';
+	woocommerce_wp_text_input( 
+		array( 
+			'id'          => '_price1', 
+			'label'     => __( 'price 1', 'woocommerce' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+			'data_type' => 'price',
+		)
+	);
+	woocommerce_wp_text_input( 
+		array( 
+			'id'          => '_price2', 
+			'label'     => __( 'price 2', 'woocommerce' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+			'data_type' => 'price',
+		)
+	);
+	woocommerce_wp_text_input( 
+		array( 
+			'id'          => '_price3', 
+			'label'     => __( 'price3', 'woocommerce' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+			'data_type' => 'price',
+		)
+	);
+
+	echo '</div>';
+  }
+add_action( 'woocommerce_product_options_general_product_data', 'woo_add_fields' );
+
+//save
+function woo_add_custom_general_fields_save( $post_id ){
+    $woocommerce_text_field_1 = $_POST['_price1'];
+	$woocommerce_text_field_2 = $_POST['_price2'];
+	$woocommerce_text_field_3 = $_POST['_price3'];
+    if( !empty( $woocommerce_text_field_1 ) )
+        update_post_meta( $post_id, '_price1', esc_attr( $woocommerce_text_field_1 ) );
+	if( !empty( $woocommerce_text_field_2 ) )
+        update_post_meta( $post_id, '_price2', esc_attr( $woocommerce_text_field_2 ) );
+	if( !empty( $woocommerce_text_field_3 ) )
+        update_post_meta( $post_id, '_price3', esc_attr( $woocommerce_text_field_3 ) );
+}
+add_action( 'woocommerce_process_product_meta', 'woo_add_custom_general_fields_save' );
+
+//show price to detail product page
+add_action( 'woocommerce_single_product_summary', 'ci_woo_product_detail', 5 );
+function ci_woo_product_detail() {
+    global $product;
+        
+        echo '<div><span> <strong>Price 1:</strong> </span>';
+	    echo get_post_meta( $product->id, '_price1', true );
+		echo '</div>';
+        
+         echo '<div><span> <strong>Price 2:</strong> </span>';
+	    echo get_post_meta( $product->id, '_price2', true );
+		echo '</div>';
+
+		echo '<div><span> <strong>Price 3:</strong> </span>';
+	    echo get_post_meta( $product->id, '_price3', true );
+		echo '</div>';
+        
+        
+	}
 /**
  * Note: Do not add any custom code here. Please use a custom plugin so that your customizations aren't lost during updates.
  * https://github.com/woocommerce/theme-customisations
